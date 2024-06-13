@@ -1,0 +1,38 @@
+---
+- name: Configure EC2 instances
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Update apt package index
+      apt:
+        update_cache: yes
+
+    - name: Install Apache2
+      apt:
+        name: apache2
+        state: present
+
+    - name: Install MySQL
+      apt:
+        name: mysql-server
+        state: present
+
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Pull and start Docker image
+      docker_container:
+        name: nginx
+        image: nginx
+        state: started
+        volumes:
+          - /var/lib/docker/volumes/ephemeral:/usr/share/nginx/html
