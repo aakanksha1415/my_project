@@ -5,6 +5,5 @@ services:
     image: nginx:latest   # Using NGINX official image
     ports:
       - "8080:80"         
-  db:
-    image: mysql:latest
+ 
     
